@@ -15,9 +15,11 @@
 				<h1 class="title">Settings</h1>
 			</ion-header-bar>
 			<ion-content>
-				<ion-item class="item-divider">
+				<ion-item class="item-divider">Units</ion-item>
+				<ion-radio ng-model="settings.units" ng-value="'us'" menu-close="true">Fahrenheit</ion-radio>
+				<ion-radio ng-model="settings.units" ng-value="'si'" menu-close="true">Celcius</ion-radio>
 
-				</ion-item>
+				<p class="padding">Weather data powered by <a href="https://developer.forecast.io/docs/v2">Forecast.io</a></p>				
 			</ion-content>
 		</ion-side-menu>
 	</ion-side-menu-content>
