@@ -16,13 +16,15 @@ angular.module('app', ['ionic','app.controllers'])
     url: '/weather',
     views: {
       'menuContent': {
-        templateUrl: 'templates/menu.html',
+        templateUrl: 'templates/weather.html',
         controller: 'WeatherCtrl'    
       }
       
     }
     
   });
+
+  $urlRouterProvider.otherwise('/app/weather');
 })
 
 
