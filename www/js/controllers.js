@@ -7,19 +7,41 @@ angular.module('app.controllers',[])
 	$scope.haveData = false;
 	$ionicLoading.show({
 		template: 'Loading...'
-	})
-	Weather.getWeatherAtLocation(32.42, -117).then(function(resp){
-		
-		$log.info(resp);
-		$scope.current = resp.data.currently;
-		$scope.highTemp = Math.ceil(resp.data.daily.data[0].temperatureMax);
-		$scope.lowTemp = Math.ceil(resp.data.daily.data[0].temperatureMin);
-		$scope.currentTemp = Math.ceil($scope.current.temperature);
-		$scope.haveData = true;
-		$ionicLoading.hide();
-	}, function(error){
-		alert('Unable to get current conditions');
-		$log.error(error);
-	})
+	});
+
+	function getWeather(){
+		$scope.haveData = false;
+		$ionicLoading.show({
+			template: 'Loading...'
+		});
+		Weather.getWeatherAtLocation(32.42, -117).then(function(resp){
+			
+			$log.info(resp);
+			$scope.current = resp.data.currently;
+			$scope.highTemp = Math.ceil(resp.data.daily.data[0].temperatureMax);
+			$scope.lowTemp = Math.ceil(resp.data.daily.data[0].temperatureMin);
+			$scope.currentTemp = Math.ceil($scope.current.temperature);
+			$scope.haveData = true;
+			$ionicLoading.hide();
+			$scope.$broadcast('scroll.refreshComplete');
+		}, function(error){
+			alert('Unable to get current conditions');
+			$log.error(error);
+		})	
+	}
+	getWeather();
+
+	$scope.doRefresh = function(){
+		getWeather();
+	}
+
+	$scope.$watch(function(){
+		return Settings.units;
+	}, function(newVal,oldVal){
+		if(newVal !== oldVal){
+			getWeather();
+		}
+	});
 	
-})
+	
+});
