@@ -14,6 +14,7 @@ angular.module('app.services',[])
 })
 .factory('Weather', function($http, $log, Settings, FORECASTIO_KEY){
 	$log.info('Weather Factory');
+	console.log('api key is: ', FORECASTIO_KEY);
 	var url = 'https://api.forecast.io/forecast/' + FORECASTIO_KEY + '/';
 
 	return {
