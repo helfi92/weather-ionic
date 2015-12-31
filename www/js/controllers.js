@@ -1,10 +1,10 @@
 angular.module('app.controllers',[])
 .constant('FORECASTIO_KEY', '565c31a0d08df6730aa4fcd56258451b')
-.controller('AppCtrl', function($scope,$log){
-	$log.info('AppCtrl Created');
+.controller('AppCtrl', function($scope,$log,Weather,Settings,$ionicLoading,Location){
+	
 })
-.controller('WeatherCtrl', function($scope,$log,$ionicPlatform,Weather,$ionicLoading,$cordovaGeolocation,Settings,Location){
-	$log.info('WeatherCtrl Created');
+.controller('WeatherCtrl', function($rootScope,$scope,$log,$ionicPlatform,Weather,$ionicLoading,$cordovaGeolocation,Settings,Location){
+	//$log.info('WeatherCtrl Created');
 	
 	$ionicPlatform.ready(function(){
 		if(Location.lat == 0){
@@ -23,10 +23,6 @@ angular.module('app.controllers',[])
 				});
 		}
 	})
-
-
-
-
 
 	$scope.haveData = false;
 	$ionicLoading.show({
@@ -58,14 +54,12 @@ angular.module('app.controllers',[])
 	$scope.doRefresh = function(){
 		getWeather();
 	}
-
-	$scope.$watch(function(){
-		return Settings.units;
-	}, function(newVal,oldVal){
-		if(newVal !== oldVal){
-			getWeather();
-		}
-	});
+	
+	$rootScope.changeUnits = function(newUnits){
+		console.log('units: ', newUnits);
+		Settings.units = newUnits;
+		getWeather();
+	}
 	
 	
 });
